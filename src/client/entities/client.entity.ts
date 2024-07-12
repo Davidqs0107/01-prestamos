@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Loan } from "src/loans/entities/loan.entity"
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 @Entity()
 export class Client {
 
@@ -70,7 +71,12 @@ export class Client {
     )
     updateAt: Date
 
-
+    @OneToMany(
+        () => Loan,
+        (loan) => loan.client,
+        { cascade: true }
+    )
+    loans?: Loan[]
     @BeforeInsert()
     checkFieldsBeforeInsert() {
         this.email = this.email.toLowerCase().trim();
