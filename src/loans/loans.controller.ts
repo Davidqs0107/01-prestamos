@@ -24,12 +24,12 @@ export class LoansController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLoanDto: UpdateLoanDto) {
-    return this.loansService.update(+id, updateLoanDto);
+  update(@Param('id',ParseUUIDPipe) id: string, @Body() updateLoanDto: UpdateLoanDto) {
+    return this.loansService.update(id, updateLoanDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.loansService.remove(+id);
+  remove(@Param('id',ParseUUIDPipe) id: string) {
+    return this.loansService.remove(id);
   }
 }
