@@ -5,13 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Collection } from './entities/collection.entity';
 import { PaymentModule } from 'src/payment/payment.module';
 import { UserModule } from 'src/user/user.module';
+import { CommonModule } from 'src/common/common.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Collection])
-    , PaymentModule
-    , UserModule],
+  imports: [
+    TypeOrmModule.forFeature([Collection]),
+    PaymentModule,
+    UserModule,
+    CommonModule,
+  ],
   controllers: [CollectionsController],
   providers: [CollectionsService],
-  exports: [TypeOrmModule]
+  exports: [TypeOrmModule],
 })
-export class CollectionsModule { }
+export class CollectionsModule {}

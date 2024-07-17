@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  Query,
+} from '@nestjs/common';
 import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
+import { PaginateDto } from 'src/common/dto/paginate.dto';
 
 @Controller('collections')
 export class CollectionsController {
@@ -12,9 +23,20 @@ export class CollectionsController {
     return this.collectionsService.create(createCollectionDto);
   }
 
-  @Get()
-  findAll() {
-    return this.collectionsService.findAll();
+  @Get('payment/:paymentId')
+  findAllPayment(
+    @Query() paginateDto: PaginateDto,
+    @Param('paymentId', ParseUUIDPipe) paymentId: string,
+  ) {
+    return this.collectionsService.findAllPayment(paginateDto, paymentId);
+  }
+
+  @Get('user/:userId')
+  findAllUser(
+    @Query() paginateDto: PaginateDto,
+    @Param('userId', ParseUUIDPipe) userId: string,
+  ) {
+    return this.collectionsService.findAllUser(paginateDto, userId);
   }
 
   @Get(':id')
@@ -23,7 +45,10 @@ export class CollectionsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCollectionDto: UpdateCollectionDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCollectionDto: UpdateCollectionDto,
+  ) {
     return this.collectionsService.update(+id, updateCollectionDto);
   }
 
