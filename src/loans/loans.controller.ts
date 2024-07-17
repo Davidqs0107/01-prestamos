@@ -20,7 +20,7 @@ export class LoansController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.loansService.findOne(+id);
+    return this.loansService.findOne(id);
   }
 
   @Patch(':id')

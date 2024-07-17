@@ -1,5 +1,6 @@
 import { Client } from "src/client/entities/client.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Payment } from "src/payment/entities/payment.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Loan {
 
@@ -52,4 +53,9 @@ export class Loan {
     )
     client: Client
 
+    @OneToMany(
+        () => Payment,
+        (payment) => payment.loan
+    )
+    payment: Payment
 }

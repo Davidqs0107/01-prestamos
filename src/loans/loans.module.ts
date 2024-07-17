@@ -14,6 +14,6 @@ import { ClientModule } from 'src/client/client.module';
   ],
   controllers: [LoansController],
   providers: [LoansService],
-  exports: [TypeOrmModule]
+  exports: [TypeOrmModule, LoansService]
 })
 export class LoansModule { }

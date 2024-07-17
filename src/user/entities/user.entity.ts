@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Collection } from "src/collections/entities/collection.entity";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -58,6 +59,11 @@ export class User {
     )
     updateAt: Date
 
+    @OneToMany(
+        () => Collection,
+        (collection) => collection.user
+    )
+    collection: Collection
 
     @BeforeInsert()
     checkFieldsBeforeInsert() {

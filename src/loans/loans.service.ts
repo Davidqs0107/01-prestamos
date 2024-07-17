@@ -29,8 +29,9 @@ export class LoansService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} loan`;
+  async findOne(id: string) {
+    const loan = await this.loanRepository.findOneBy({ id });
+    return loan;
   }
 
   update(id: number, updateLoanDto: UpdateLoanDto) {
