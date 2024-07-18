@@ -25,11 +25,17 @@ export class Collection {
   note: string;
 
   @Column({
+    type: 'bool',
+    default: true,
+  })
+  isActive: boolean;
+
+  @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
   createAt: Date;
-  
+
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
