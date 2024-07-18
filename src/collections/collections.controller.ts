@@ -40,8 +40,8 @@ export class CollectionsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.collectionsService.findOne(+id);
+  findOne(@Param('id',ParseUUIDPipe) id: string) {
+    return this.collectionsService.findOne(id);
   }
 
   @Patch(':id')
@@ -49,11 +49,11 @@ export class CollectionsController {
     @Param('id') id: string,
     @Body() updateCollectionDto: UpdateCollectionDto,
   ) {
-    return this.collectionsService.update(+id, updateCollectionDto);
+    return this.collectionsService.update(id, updateCollectionDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.collectionsService.remove(+id);
+  remove(@Param('id',ParseUUIDPipe) id: string) {
+    return this.collectionsService.remove(id);
   }
 }

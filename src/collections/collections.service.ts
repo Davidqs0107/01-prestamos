@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -46,15 +46,26 @@ export class CollectionsService {
       where: { userId },
     });
   }
-  findOne(id: number) {
-    return `This action returns a #${id} collection`;
+  async findOne(id: string) {
+    const collection = await this.collectionRepository.findOneBy({ id });
+    if (!collection)
+      throw new NotFoundException(`This Collection with ${id} not found`);
+
+    return collection;
   }
 
-  update(id: number, updateCollectionDto: UpdateCollectionDto) {
-    return `This action updates a #${id} collection`;
+  async update(id: string, updateCollectionDto: UpdateCollectionDto) {
+    const collection = await this.collectionRepository.preload({
+      id,
+      ...updateCollectionDto,
+    });
+    if (!collection)
+      throw new NotFoundException(`This Collection with ${id} not found`);
+    return await this.collectionRepository.save(collection);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} collection`;
+  async remove(id: string) {
+    const collection = await this.findOne(id);
+    return await this.collectionRepository.remove(collection);
   }
 }
