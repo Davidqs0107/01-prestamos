@@ -1,17 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { LoginDto } from './dto/login.dto';
 import { UserService } from 'src/user/user.service';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
 
   constructor(
-    private userService:UserService
-  ){}
-  
-  login(createAuthDto: CreateAuthDto) {
-    throw new Error('Method not implemented.');
+    private userService: UserService,
+    private jwtService: JwtService
+  ) { }
+
+  async login(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+    const user = await this.userService.findEmail(email);
+    if (!bcrypt.compareSync(password, user.password))
+      throw new UnauthorizedException('Credentials are not valid (password)');
+
+
+    return {
+      ...user,
+      token: this.getJwtToken(user.id)
+    };
+  }
+
+  private getJwtToken(id: string) {
+
+    const token = this.jwtService.sign({ id });
+    return token;
+
   }
   async findOne(id: string) {
     const user = await this.userService.findOne(id);
