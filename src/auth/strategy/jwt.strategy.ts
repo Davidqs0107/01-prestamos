@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { AuthService } from '../auth.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { jwtConstants } from '../constants/constants';
+import { JwtAuthDto } from '../dto/jwt-auth.dto';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(id: string): Promise<any> {
+  async validate(payload: JwtAuthDto): Promise<any> {
+    const { id } = payload;
     const user = await this.authService.findOne(id);
     if (!user) throw new UnauthorizedException('Token not valid');
 
