@@ -16,6 +16,6 @@ import { CommonModule } from 'src/common/common.module';
   ],
   controllers: [CollectionsController],
   providers: [CollectionsService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, CollectionsService],
 })
-export class CollectionsModule {}
+export class CollectionsModule { }

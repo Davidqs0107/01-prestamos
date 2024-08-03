@@ -1,6 +1,7 @@
+import { Delivery } from 'src/deliveries/entities/delivery.entity';
 import { Payment } from 'src/payment/entities/payment.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 @Entity()
 export class Collection {
   @PrimaryGeneratedColumn('uuid')
@@ -23,6 +24,18 @@ export class Collection {
     nullable: true,
   })
   note: string;
+
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  lat: string;
+
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  lng: string;
 
   @Column({
     type: 'bool',
@@ -54,4 +67,7 @@ export class Collection {
 
   @ManyToOne(() => User, (user) => user.collection)
   user: User;
+
+  @OneToMany(() => Delivery, (delivery) => delivery.collection)
+  delivery: Delivery
 }

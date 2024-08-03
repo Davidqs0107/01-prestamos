@@ -11,9 +11,6 @@ async function bootstrap() {
       new FastifyAdapter()
     );
   app.setGlobalPrefix('api');
-
-  app.setGlobalPrefix('api');
-
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

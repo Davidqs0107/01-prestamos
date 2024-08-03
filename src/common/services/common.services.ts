@@ -6,7 +6,13 @@ export class CommonService {
         this.logger.error(error);
         console.log(error);
         if (error.code === '23505') {
-            throw new BadRequestException(error.detail);
+        }
+        switch (error.code) {
+            case '23505':
+                throw new BadRequestException(error.detail);
+            case '23503':
+                throw new BadGatewayException(error.detail);
+
         }
         throw new BadGatewayException('Check logs');
     }

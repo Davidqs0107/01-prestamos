@@ -5,7 +5,6 @@ import { UpdateClientDto } from './dto/update-client.dto';
 import { PaginateDto } from 'src/common/dto/paginate.dto';
 import { Auth } from 'src/auth/decorator/auth.decorator';
 import { ValidRoles } from 'src/auth/constants/constants';
-
 @Controller('client')
 export class ClientController {
   constructor(private readonly clientService: ClientService) { }
